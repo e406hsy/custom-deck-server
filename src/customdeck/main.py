@@ -1,6 +1,6 @@
-from soonyong import event
-from soonyong.event import Event
-from soonyong.keyboard import KeyBoard
+from customdeck import event
+from customdeck.event import Event
+from customdeck.keyboard import KeyBoard
 
 
 def main():

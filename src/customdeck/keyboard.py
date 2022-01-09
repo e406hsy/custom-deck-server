@@ -3,20 +3,10 @@ from pynput.keyboard import Key, Controller
 
 class KeyBoard:
 
-    def __new__(cls, *args, **kwargs):
-        if not hasattr(cls, "_instance"):  # Foo 클래스 객체에 _instance 속성이 없다면
-            print("__new__ is called\n")
-            cls._instance = super().__new__(cls)
-        return cls._instance
-
     def __init__(self):
-        cls = type(self)
-        if not hasattr(cls, "_init"):  # Foo 클래스 객체에 _init 속성이 없다면
-            print("__init__ is called\n")
-            self.keyboard = Controller()
-            cls._init = True
+        self.keyboard = Controller()
 
-    def input_key(self, key):
+    def input_key(self, key: str):
         self.keyboard.press(key)
         self.keyboard.release(key)
 

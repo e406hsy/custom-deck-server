@@ -1,4 +1,5 @@
 from enum import Enum, unique
+from typing import Callable
 
 from pubsub import pub
 
@@ -8,8 +9,8 @@ class Event(Enum):
     KeyPress = 'keyPress'
 
 
-def subscribe(callable, event: Event):
-    pub.subscribe(callable, event.value)
+def subscribe(func: Callable, event: Event) -> None:
+    pub.subscribe(func, event.value)
 
 
 def send_message(event: Event, **data):
