@@ -5,7 +5,7 @@ import java.awt.event.KeyEvent
 
 class KeyboardServiceTest : FunSpec({
     test("test") {
-        KeyboardService().press(KeyEvent.VK_NUMPAD4)
+        KeyboardService().press(KeyEvent.VK_RIGHT)
     }
 
 })

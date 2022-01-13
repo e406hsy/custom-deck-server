@@ -30,7 +30,7 @@ dependencies {
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.13.0")
 
     /** spring **/
-    implementation("org.springframework.boot:spring-boot-starter-websocket")
+    implementation("org.springframework.boot:spring-boot-starter-webflux")
 
     /** spring dev tool **/
     developmentOnly("org.springframework.boot:spring-boot-devtools")
