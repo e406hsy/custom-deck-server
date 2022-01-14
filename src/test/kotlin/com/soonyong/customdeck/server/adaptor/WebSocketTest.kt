@@ -3,8 +3,6 @@ package com.soonyong.customdeck.server.adaptor
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.extensions.spring.SpringExtension
 import io.kotest.matchers.ints.shouldBeExactly
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.withContext
 import mu.KotlinLogging
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.web.server.LocalServerPort
@@ -14,11 +12,8 @@ import org.springframework.web.reactive.socket.client.ReactorNettyWebSocketClien
 import org.springframework.web.reactive.socket.client.WebSocketClient
 import reactor.core.publisher.Flux
 import reactor.core.scheduler.Schedulers
-import reactor.test.StepVerifier
-import java.lang.Thread.sleep
 import java.net.URI
 import java.time.Duration
-import kotlin.coroutines.CoroutineContext
 
 private val log = KotlinLogging.logger {}
 
