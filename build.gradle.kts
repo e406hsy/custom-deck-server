@@ -40,6 +40,7 @@ dependencies {
     implementation("io.github.microutils:kotlin-logging:1.12.5")
 
     /** test **/
+    testImplementation("io.projectreactor:reactor-test:3.4.13")
     implementation("io.kotest:kotest-extensions-spring:4.4.3")
     testImplementation("io.kotest:kotest-assertions-core:4.4.3")
     testImplementation("io.kotest:kotest-runner-junit5:4.4.3")
