@@ -31,6 +31,7 @@ dependencies {
 
     /** spring **/
     implementation("org.springframework.boot:spring-boot-starter-webflux")
+    implementation("org.springframework.boot:spring-boot-starter-integration")
 
     /** spring dev tool **/
     developmentOnly("org.springframework.boot:spring-boot-devtools")
@@ -39,7 +40,9 @@ dependencies {
     implementation("io.github.microutils:kotlin-logging:1.12.5")
 
     /** test **/
-    testImplementation ("io.kotest:kotest-runner-junit5:5.0.2")
+    implementation("io.kotest:kotest-extensions-spring:4.4.3")
+    testImplementation("io.kotest:kotest-assertions-core:4.4.3")
+    testImplementation("io.kotest:kotest-runner-junit5:4.4.3")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
