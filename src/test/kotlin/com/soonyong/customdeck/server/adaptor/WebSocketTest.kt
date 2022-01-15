@@ -57,7 +57,7 @@ class WebSocketTest : StringSpec() {
             }
 
             sendCount shouldBeExactly 10
-            receiveCount shouldBeExactly 10
+            receiveCount shouldBeExactly 1
 
         }
     }
