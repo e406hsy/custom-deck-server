@@ -21,7 +21,7 @@ class WebSocketHandlerImpl(private val buttonService: ButtonService) : WebSocket
             log.info { "message received. $it. ${it.payloadAsText}" }
         }.then()
 
-        val output = session.send(buttonService.getButtons().map(session::textMessage))
+        val output = session.send(buttonService.getButtons().map{ session.textMessage("$it")})
         return Mono.zip(input, output).then()
     }
 }
