@@ -3,10 +3,7 @@ package com.soonyong.customdeck.server.domain.button
 import io.kotest.assertions.fail
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import java.io.File
-import java.lang.Thread.sleep
 
 private const val fileName = "test_file.txt"
 
@@ -28,10 +25,6 @@ class ButtonRepositoryTest : StringSpec({
         }?.let {
             buttonRepository.setButton(it)
         } ?: fail("should not null")
-
-        withContext(Dispatchers.IO) {
-            sleep(1000)
-        }
 
         val buttonRepository2 = ButtonRepository(fileName)
 
