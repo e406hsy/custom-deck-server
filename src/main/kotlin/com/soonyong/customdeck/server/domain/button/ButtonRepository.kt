@@ -32,10 +32,11 @@ class ButtonRepository(fileName: String) {
     }
 
     fun setButton(button: Button){
-        buttons[button.id] = button
+        buttons[button.id] = button.copy()
+        saveButton()
     }
 
-    private fun saveButton(button: Button){
+    private fun saveButton() {
         file.outputStream().use { it.write(objectMapper.writeValueAsBytes(buttons)) }
     }
 }
