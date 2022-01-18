@@ -23,8 +23,9 @@ class ButtonRepositoryTest : StringSpec({
     "저장 후 가져오기" {
         val buttonRepository = ButtonRepository(fileName)
 
-        buttonRepository.getButton(1).block()?.let {
-            it.name = "new"
+        buttonRepository.getButton(1).block()?.apply {
+            name = "new"
+        }?.let {
             buttonRepository.setButton(it)
         } ?: fail("should not null")
 
