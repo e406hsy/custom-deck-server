@@ -1,6 +1,7 @@
 package com.soonyong.customdeck.server.adaptor
 
 import com.soonyong.customdeck.server.applcation.button.ButtonService
+import kotlinx.coroutines.reactor.flux
 import mu.KotlinLogging
 import org.springframework.stereotype.Component
 import org.springframework.web.reactive.socket.WebSocketHandler
@@ -21,7 +22,11 @@ class WebSocketHandlerImpl(private val buttonService: ButtonService) : WebSocket
             log.info { "message received. $it. ${it.payloadAsText}" }
         }.then()
 
-        val output = session.send(buttonService.getButtons().map{ session.textMessage("$it")})
+        val output = session.send(flux {
+            buttonService.getButtons().forEach {
+                send(it)
+            }
+        }.map { session.textMessage("$it") })
         return Mono.zip(input, output).then()
     }
 }

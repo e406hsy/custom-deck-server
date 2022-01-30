@@ -11,7 +11,7 @@ import reactor.core.publisher.Mono
 
 @Service
 class ButtonServiceImpl(private val publisher: ApplicationEventPublisher, private val buttonRepository: ButtonRepository) :ButtonService {
-    override fun getButtons(): Flux<Button> = TODO()
+    override fun getButtons(): List<Button> = TODO()
     override fun pressButtons(buttonId: Long) {
         publisher.publishEvent(KeyboardPressEvent())
     }

@@ -6,3 +6,6 @@ logging:
       soonyong: debug
     org:
       springframework: info
+
+button:
+  file: Buttons.json

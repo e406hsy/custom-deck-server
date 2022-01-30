@@ -3,12 +3,13 @@ package com.soonyong.customdeck.server.domain.button
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import com.soonyong.customdeck.server.domain.button.model.Button
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Repository
 import reactor.core.publisher.Mono
 import java.io.File
 
 @Repository
-class ButtonRepository(fileName: String) {
+class ButtonRepository(@Value("\${button.file}") fileName: String) {
 
     private val objectMapper = ObjectMapper().registerKotlinModule()
     private val file = File(fileName)
