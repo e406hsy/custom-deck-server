@@ -7,5 +7,6 @@ logging:
     org:
       springframework: info
 
-button:
-  file: Buttons.json
+file:
+  button: Buttons.json
+  page: Pages.json

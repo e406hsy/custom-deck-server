@@ -5,19 +5,18 @@ import io.kotest.matchers.shouldBe
 import kotlinx.coroutines.runBlocking
 import java.io.File
 
-private const val pageFileName = "page_test_file.txt"
 private const val buttonFileName = "button_test_file.txt"
 
 class ButtonRepositoryTest : FunSpec({
 
-    test("단순 조회"){
-        val buttonRepository = ButtonRepository(pageFileName,buttonFileName)
+    test("Button: 단순 조회") {
+        val buttonRepository = ButtonRepository(buttonFileName)
 
         buttonRepository.getButton(1).id shouldBe 1
     }
 
-    test("저장 후 가져오기") {
-        val buttonRepository = ButtonRepository(pageFileName,buttonFileName)
+    test("Button: 저장 후 가져오기") {
+        val buttonRepository = ButtonRepository(buttonFileName)
 
         buttonRepository.getButton(1).apply {
             name = "new"
@@ -27,7 +26,7 @@ class ButtonRepositoryTest : FunSpec({
             }
         }
 
-        val buttonRepository2 = ButtonRepository(pageFileName,buttonFileName)
+        val buttonRepository2 = ButtonRepository(buttonFileName)
 
         buttonRepository2.getButton(1).let {
             it.id shouldBe 1
@@ -37,7 +36,6 @@ class ButtonRepositoryTest : FunSpec({
     }
 
     afterEach {
-        File(pageFileName).delete()
         File(buttonFileName).delete()
     }
 
