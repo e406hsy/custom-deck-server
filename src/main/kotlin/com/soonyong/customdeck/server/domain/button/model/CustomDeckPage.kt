@@ -1,6 +1,10 @@
 package com.soonyong.customdeck.server.domain.button.model
 
-class CustomDeckPage(val xCount: Int, val yCount: Int, buttons: MutableList<Button> = mutableListOf()) {
+class CustomDeckPage(
+    val xCount: Int,
+    val yCount: Int,
+    buttons: MutableList<Button> = MutableList(xCount * yCount) { Button(0) }
+) {
     private val _buttons: MutableList<Button> = buttons
 
     val buttons: List<Button>
@@ -17,7 +21,7 @@ class CustomDeckPage(val xCount: Int, val yCount: Int, buttons: MutableList<Butt
     }
 
     private fun validateIndex(xIndex: Int, yIndex: Int) {
-        if (xIndex >= xCount || yIndex >= yCount) {
+        if (xIndex < 0 || yIndex < 0 || xIndex >= xCount || yIndex >= yCount) {
             throw IllegalArgumentException("invalid range xCount:$xCount, yCount:$yCount, xIndex:$xIndex, yIndex:$yIndex")
         }
     }
