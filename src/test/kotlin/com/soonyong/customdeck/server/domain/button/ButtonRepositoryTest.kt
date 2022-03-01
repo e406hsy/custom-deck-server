@@ -1,6 +1,5 @@
 package com.soonyong.customdeck.server.domain.button
 
-import io.kotest.assertions.fail
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 import kotlinx.coroutines.runBlocking
