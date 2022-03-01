@@ -1,4 +1,4 @@
-package com.soonyong.customdeck.server.applcation.button
+package com.soonyong.customdeck.server.application.button
 
 import com.soonyong.customdeck.server.domain.button.model.Button
 import reactor.core.publisher.Mono

@@ -1,4 +1,4 @@
-package com.soonyong.customdeck.server.adaptor.presentation
+package com.soonyong.customdeck.server.ui
 
 import javafx.beans.property.SimpleStringProperty
 import org.springframework.beans.factory.annotation.Autowired
@@ -7,8 +7,8 @@ import tornadofx.*
 
 class MasterView : View() {
 
-    val controller: MyController by di()
-    val input = SimpleStringProperty()
+    private val controller: MyController by di()
+    private val input = SimpleStringProperty()
 
     override val root = form {
         fieldset {

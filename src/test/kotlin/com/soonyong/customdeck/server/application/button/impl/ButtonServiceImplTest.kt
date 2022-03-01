@@ -1,4 +1,4 @@
-package com.soonyong.customdeck.server.applcation.button.impl
+package com.soonyong.customdeck.server.application.button.impl
 
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.extensions.spring.SpringExtension

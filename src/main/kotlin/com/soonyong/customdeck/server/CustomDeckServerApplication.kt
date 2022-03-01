@@ -1,6 +1,6 @@
 package com.soonyong.customdeck.server
 
-import com.soonyong.customdeck.server.adaptor.presentation.MasterView
+import com.soonyong.customdeck.server.ui.MasterView
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 import org.springframework.context.ConfigurableApplicationContext

@@ -1,8 +1,7 @@
-package com.soonyong.customdeck.server.applcation.keyboard
+package com.soonyong.customdeck.server.application.keyboard
 
-import com.soonyong.customdeck.server.applcation.keyboard.model.KeyboardPressEvent
+import com.soonyong.customdeck.server.application.keyboard.model.KeyboardPressEvent
 import mu.KotlinLogging
-import org.springframework.context.ApplicationEventPublisher
 import org.springframework.context.event.EventListener
 import org.springframework.stereotype.Component
 
