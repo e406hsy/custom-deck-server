@@ -8,18 +8,11 @@ import org.junit.jupiter.api.assertThrows
 
 class CustomDeckPageTest : FunSpec({
 
-    val customDeckPage = CustomDeckPage(2, 4)
+    val customDeckPage = CustomDeckPage(1, 2, 4)
 
     context("index size match") {
         forAll(
-            Pair(0, 0),
-            Pair(0, 1),
-            Pair(0, 2),
-            Pair(0, 3),
-            Pair(1, 0),
-            Pair(1, 1),
-            Pair(1, 2),
-            Pair(1, 3)
+            Pair(0, 0), Pair(0, 1), Pair(0, 2), Pair(0, 3), Pair(1, 0), Pair(1, 1), Pair(1, 2), Pair(1, 3)
         ) { (xIndex, yIndex) ->
             customDeckPage.getButton(xIndex, yIndex) shouldNotBe null
         }
@@ -41,15 +34,9 @@ class CustomDeckPageTest : FunSpec({
 
     context("set Button") {
 
-        customDeckPage.setButton(0,1, Button(2) )
+        customDeckPage.setButton(0, 1, Button(2))
         forAll(
-            Pair(0, 0),
-            Pair(0, 2),
-            Pair(0, 3),
-            Pair(1, 0),
-            Pair(1, 1),
-            Pair(1, 2),
-            Pair(1, 3)
+            Pair(0, 0), Pair(0, 2), Pair(0, 3), Pair(1, 0), Pair(1, 1), Pair(1, 2), Pair(1, 3)
         ) { (xIndex, yIndex) ->
             customDeckPage.getButton(xIndex, yIndex).id shouldBe 0
         }

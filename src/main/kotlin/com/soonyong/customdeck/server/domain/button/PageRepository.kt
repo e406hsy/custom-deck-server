@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import com.soonyong.customdeck.server.domain.button.model.CustomDeckPage
 import com.soonyong.customdeck.server.domain.button.vo.SimpleCustomDeckPage
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Repository
 import java.io.File
@@ -24,15 +26,11 @@ class PageRepository(@Value("\${file.page}") pageFileName: String, _buttonReposi
             }
         }
 
-        pages =
-            objectMapper.readValue(
-                pageFile,
-                objectMapper.typeFactory.constructParametricType(
-                    MutableMap::class.java,
-                    Int::class.java,
-                    SimpleCustomDeckPage::class.java
-                )
+        pages = objectMapper.readValue(
+            pageFile, objectMapper.typeFactory.constructParametricType(
+                MutableMap::class.java, Int::class.java, SimpleCustomDeckPage::class.java
             )
+        )
 
     }
 
@@ -40,6 +38,7 @@ class PageRepository(@Value("\${file.page}") pageFileName: String, _buttonReposi
     fun getCustomDeckPage(pageId: Int): CustomDeckPage {
         return with(pages[pageId] ?: throw IllegalArgumentException("page${pageId} not found")) {
             CustomDeckPage(
+                id = this.id,
                 xCount = this.xCount,
                 yCount = this.yCount,
                 buttons = this.buttonIds.map { buttonRepository.getButton(it) }.toMutableList()
@@ -47,8 +46,26 @@ class PageRepository(@Value("\${file.page}") pageFileName: String, _buttonReposi
         }
     }
 
-    fun setCustomDeckPage(customDeckPage: CustomDeckPage) {
-        TODO()
+    suspend fun setCustomDeckPage(customDeckPage: CustomDeckPage) {
+        pages[customDeckPage.id] = with(customDeckPage) {
+            SimpleCustomDeckPage(
+                id = this.id,
+                xCount = this.xCount,
+                yCount = this.yCount,
+                buttonIds = this.buttons.map { it.id }.toMutableList()
+            )
+        }
+
+        withContext(Dispatchers.IO) {
+            // TODO: 비동기 고려해보기
+            saveCustomDeckPage()
+            customDeckPage.buttons.forEach { buttonRepository.setButton(it) }
+        }
+    }
+
+    private suspend fun saveCustomDeckPage() {
+
+        pageFile.outputStream().use { it.write(objectMapper.writeValueAsBytes(pages)) }
     }
 
 }

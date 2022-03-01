@@ -1,6 +1,7 @@
 package com.soonyong.customdeck.server.domain.button.model
 
 class CustomDeckPage(
+    val id: Int,
     val xCount: Int,
     val yCount: Int,
     buttons: MutableList<Button> = MutableList(xCount * yCount) { Button(0) }

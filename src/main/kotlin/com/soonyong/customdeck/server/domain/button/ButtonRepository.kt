@@ -3,8 +3,6 @@ package com.soonyong.customdeck.server.domain.button
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import com.soonyong.customdeck.server.domain.button.model.Button
-import com.soonyong.customdeck.server.domain.button.model.CustomDeckPage
-import com.soonyong.customdeck.server.domain.button.vo.SimpleCustomDeckPage
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.springframework.beans.factory.annotation.Value
@@ -25,17 +23,12 @@ class ButtonRepository(@Value("\${file.button}") buttonFileName: String) {
                 it.write("{}")
             }
         }
-        buttons =
-            objectMapper.readValue(
-                buttonFile,
-                objectMapper.typeFactory.constructParametricType(
-                    MutableMap::class.java,
-                    Int::class.java,
-                    Button::class.java
-                )
+        buttons = objectMapper.readValue(
+            buttonFile, objectMapper.typeFactory.constructParametricType(
+                MutableMap::class.java, Int::class.java, Button::class.java
             )
+        )
     }
-
 
 
     fun getButton(id: Int): Button {
