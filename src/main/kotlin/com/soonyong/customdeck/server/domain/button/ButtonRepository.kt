@@ -3,6 +3,10 @@ package com.soonyong.customdeck.server.domain.button
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import com.soonyong.customdeck.server.domain.button.model.Button
+import com.soonyong.customdeck.server.domain.button.model.CustomDeckPage
+import com.soonyong.customdeck.server.domain.button.vo.SimpleCustomDeckPage
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Repository
 import java.io.File
@@ -13,8 +17,8 @@ class ButtonRepository(@Value("\${file.page}") pageFileName: String, @Value("\${
     private val objectMapper = ObjectMapper().registerKotlinModule()
     private val buttonFile = File(buttonFileName)
     private val pageFile = File(pageFileName)
-    private val pages : MutableMap<Int, String>
-    private val buttons: MutableMap<Int, MutableMap<Int, Button>>
+    private val pages: MutableMap<Int, SimpleCustomDeckPage>
+    private val buttons: MutableMap<Int, Button>
 
     init {
         if (!buttonFile.exists()) {
@@ -30,13 +34,15 @@ class ButtonRepository(@Value("\${file.page}") pageFileName: String, @Value("\${
             }
         }
 
-        val inner = objectMapper.typeFactory.constructParametricType(
-            MutableMap::class.java,
-            Int::class.java,
-            Button::class.java
-        )
-
-        pages = mutableMapOf()
+        pages =
+            objectMapper.readValue(
+                pageFile,
+                objectMapper.typeFactory.constructParametricType(
+                    MutableMap::class.java,
+                    Int::class.java,
+                    SimpleCustomDeckPage::class.java
+                )
+            )
 
         buttons =
             objectMapper.readValue(
@@ -49,26 +55,34 @@ class ButtonRepository(@Value("\${file.page}") pageFileName: String, @Value("\${
             )
     }
 
-//
-//    suspend fun getCustomDeckPage(pageId: Int): CustomDeckPage {
-//
-//        return
-//    }
-//
-//    fun getButtons(): Mono<Collection<Button>> {
-//        return Mono.just(buttons.entries.sortedBy { it.key }.map { it.value })
-//    }
-//
-//    fun getButton(id: Long): Mono<Button> {
-//        return Mono.just(buttons[id]?.copy() ?: Button(id))
-//    }
-//
-//    fun setButton(button: Button) {
-//        buttons[button.id] = button.copy()
-//        saveButton()
-//    }
-//
-//    private fun saveButton() {
-//        buttonFile.outputStream().use { it.write(objectMapper.writeValueAsBytes(buttons)) }
-//    }
+
+    fun getCustomDeckPage(pageId: Int): CustomDeckPage {
+        return with(pages[pageId] ?: throw IllegalArgumentException("page${pageId} not found")) {
+            CustomDeckPage(
+                xCount = this.xCount,
+                yCount = this.yCount,
+                buttons = this.buttonIds.map { buttons[it] ?: Button(0) }.toMutableList()
+            )
+        }
+    }
+
+    fun setCustomDeckPage(customDeckPage: CustomDeckPage) {
+
+    }
+
+
+    fun getButton(id: Int): Button {
+        return buttons[id]?.copy() ?: Button(id)
+    }
+
+    suspend fun setButton(button: Button) {
+        buttons[button.id] = button.copy()
+        withContext(Dispatchers.IO) {
+            saveButton()
+        }
+    }
+
+    private suspend fun saveButton() {
+        buttonFile.outputStream().use { it.write(objectMapper.writeValueAsBytes(buttons)) }
+    }
 }

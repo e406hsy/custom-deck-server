@@ -1,42 +1,45 @@
 package com.soonyong.customdeck.server.domain.button
 
 import io.kotest.assertions.fail
-import io.kotest.core.spec.style.StringSpec
+import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
+import kotlinx.coroutines.runBlocking
 import java.io.File
 
-private const val fileName = "test_file.txt"
+private const val pageFileName = "page_test_file.txt"
+private const val buttonFileName = "button_test_file.txt"
 
-class ButtonRepositoryTest : StringSpec({
+class ButtonRepositoryTest : FunSpec({
 
-    "단순 조회"{
-        val buttonRepository = ButtonRepository(fileName)
+    test("단순 조회"){
+        val buttonRepository = ButtonRepository(pageFileName,buttonFileName)
 
-        buttonRepository.getButton(1).block()?.let {
-            it.id shouldBe 1
-        } ?: fail("should not null")
+        buttonRepository.getButton(1).id shouldBe 1
     }
 
-    "저장 후 가져오기" {
-        val buttonRepository = ButtonRepository(fileName)
+    test("저장 후 가져오기") {
+        val buttonRepository = ButtonRepository(pageFileName,buttonFileName)
 
-        buttonRepository.getButton(1).block()?.apply {
+        buttonRepository.getButton(1).apply {
             name = "new"
-        }?.let {
-            buttonRepository.setButton(it)
-        } ?: fail("should not null")
+        }.let {
+            runBlocking {
+                buttonRepository.setButton(it)
+            }
+        }
 
-        val buttonRepository2 = ButtonRepository(fileName)
+        val buttonRepository2 = ButtonRepository(pageFileName,buttonFileName)
 
-        buttonRepository2.getButton(1).block()?.let {
+        buttonRepository2.getButton(1).let {
             it.id shouldBe 1
             it.name shouldBe "new"
-        } ?: fail("should not null")
+        }
 
     }
 
     afterEach {
-        File(fileName).delete()
+        File(pageFileName).delete()
+        File(buttonFileName).delete()
     }
 
 })
