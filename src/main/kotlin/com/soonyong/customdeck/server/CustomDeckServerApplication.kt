@@ -12,6 +12,11 @@ import kotlin.reflect.KClass
 
 @SpringBootApplication
 class CustomDeckServerApplication : App(MasterView::class) {
+    companion object {
+        init {
+            System.setProperty("java.awt.headless", "false")
+        }
+    }
 
     private lateinit var context: ConfigurableApplicationContext //We are going to set application context here
 
@@ -32,7 +37,6 @@ class CustomDeckServerApplication : App(MasterView::class) {
 }
 
 fun main(args: Array<String>) {
-    System.setProperty("java.awt.headless", "false")
 
     launch<CustomDeckServerApplication>(args)
 }
