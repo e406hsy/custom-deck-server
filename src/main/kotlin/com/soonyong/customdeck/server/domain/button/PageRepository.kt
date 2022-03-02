@@ -14,7 +14,7 @@ import java.io.File
 class PageRepository(@Value("\${file.page}") pageFileName: String, _buttonRepository: ButtonRepository) {
     private val objectMapper = ObjectMapper().registerKotlinModule()
     private val pageFile = File(pageFileName)
-    private val pages: MutableMap<Int, SimpleCustomDeckPage>
+    private val customDeckPages: MutableMap<Int, SimpleCustomDeckPage>
     private val buttonRepository = _buttonRepository
 
     init {
@@ -26,7 +26,7 @@ class PageRepository(@Value("\${file.page}") pageFileName: String, _buttonReposi
             }
         }
 
-        pages = objectMapper.readValue(
+        customDeckPages = objectMapper.readValue(
             pageFile, objectMapper.typeFactory.constructParametricType(
                 MutableMap::class.java, Int::class.java, SimpleCustomDeckPage::class.java
             )
@@ -34,9 +34,10 @@ class PageRepository(@Value("\${file.page}") pageFileName: String, _buttonReposi
 
     }
 
+    fun getCustomDeckPages() = customDeckPages.mapValues { getCustomDeckPage(it.key) }
 
     fun getCustomDeckPage(pageId: Int): CustomDeckPage {
-        return with(pages[pageId] ?: throw IllegalArgumentException("page${pageId} not found")) {
+        return with(customDeckPages[pageId] ?: throw IllegalArgumentException("page${pageId} not found")) {
             CustomDeckPage(
                 id = this.id,
                 xCount = this.xCount,
@@ -47,7 +48,7 @@ class PageRepository(@Value("\${file.page}") pageFileName: String, _buttonReposi
     }
 
     suspend fun setCustomDeckPage(customDeckPage: CustomDeckPage) {
-        pages[customDeckPage.id] = with(customDeckPage) {
+        customDeckPages[customDeckPage.id] = with(customDeckPage) {
             SimpleCustomDeckPage(
                 id = this.id,
                 xCount = this.xCount,
@@ -65,7 +66,7 @@ class PageRepository(@Value("\${file.page}") pageFileName: String, _buttonReposi
 
     private suspend fun saveCustomDeckPage() {
 
-        pageFile.outputStream().use { it.write(objectMapper.writeValueAsBytes(pages)) }
+        pageFile.outputStream().use { it.write(objectMapper.writeValueAsBytes(customDeckPages)) }
     }
 
 }
