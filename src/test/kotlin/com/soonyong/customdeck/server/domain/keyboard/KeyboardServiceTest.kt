@@ -8,4 +8,10 @@ class KeyboardServiceTest : FunSpec({
         KeyboardService().press(KeyEvent.VK_RIGHT)
     }
 
+    test("testPressMultipleKeys") {
+        val keyboardService = KeyboardService()
+
+        keyboardService.press(durationInMillis = 200, KeyEvent.VK_CONTROL, KeyEvent.VK_RIGHT)
+    }
+
 })
