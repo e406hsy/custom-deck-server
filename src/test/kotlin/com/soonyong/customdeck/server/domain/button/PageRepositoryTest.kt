@@ -34,7 +34,7 @@ class PageRepositoryTest : FunSpec({
             pageRepository.setCustomDeckPage(
                 CustomDeckPage(
                     id = 1, xCount = 2, yCount = 2, buttons = mutableListOf(
-                        Button(0), Button(0), Button(1), Button(2, "new Name"),
+                        Button(0), Button(0), Button(1), Button(id = 2, name = "new Name"),
                     )
                 )
             )
@@ -44,7 +44,7 @@ class PageRepositoryTest : FunSpec({
             it.xCount shouldBe 2
             it.id shouldBe 1
             it.yCount shouldBe 2
-            it.buttons shouldContainInOrder listOf(Button(0), Button(0), Button(1), Button(2, "new Name"))
+            it.buttons shouldContainInOrder listOf(Button(0), Button(0), Button(1), Button(id = 2, name = "new Name"))
         }
 
         val pageRepository2 = PageRepository(pageFileName, buttonRepository)
@@ -53,7 +53,7 @@ class PageRepositoryTest : FunSpec({
             it.xCount shouldBe 2
             it.id shouldBe 1
             it.yCount shouldBe 2
-            it.buttons shouldContainInOrder listOf(Button(0), Button(0), Button(1), Button(2, "new Name"))
+            it.buttons shouldContainInOrder listOf(Button(0), Button(0), Button(1), Button(id = 2, name = "new Name"))
         }
 
     }

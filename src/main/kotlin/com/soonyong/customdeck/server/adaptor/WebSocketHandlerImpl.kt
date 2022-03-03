@@ -19,15 +19,18 @@ class WebSocketHandlerImpl(private val buttonService: ButtonService) : WebSocket
         }.doAfterTerminate {
             log.info { "socket closed" }
         }.log().doOnNext {
-            log.info { "message received. $it. ${it.payloadAsText}" }
+            log.info {
+                "message received. $it. ${it.payloadAsText}"
+                // TODO: buttonId 획득
+                buttonService.onButtonPress(1)
+            }
         }.then()
 
         val output = session.send(flux {
             buttonService.getButtons().forEach {
                 send(it)
             }
-        }.doOnNext { log.info {"sending message $it"}}
-        .map { session.textMessage("$it") })
+        }.doOnNext { log.info { "sending message $it" } }.map { session.textMessage("$it") })
         return Mono.zip(input, output).then()
     }
 }
