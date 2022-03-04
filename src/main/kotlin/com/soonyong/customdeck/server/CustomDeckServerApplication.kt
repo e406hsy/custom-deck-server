@@ -1,5 +1,6 @@
 package com.soonyong.customdeck.server
 
+import com.soonyong.customdeck.server.ui.MasterStyle
 import com.soonyong.customdeck.server.ui.MasterView
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
@@ -11,7 +12,7 @@ import tornadofx.launch
 import kotlin.reflect.KClass
 
 @SpringBootApplication
-class CustomDeckServerApplication : App(MasterView::class) {
+class CustomDeckServerApplication : App(MasterView::class, MasterStyle::class) {
     companion object {
         init {
             System.setProperty("java.awt.headless", "false")
