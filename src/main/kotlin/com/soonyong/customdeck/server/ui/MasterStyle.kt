@@ -6,7 +6,7 @@ import tornadofx.*
 class MasterStyle : Stylesheet() {
 
     companion object {
-        val tackyButton by cssclass()
+        val customDeckButton by cssclass()
 
         private val topColor = Color.RED
         private val rightColor = Color.DARKGREEN
@@ -15,11 +15,13 @@ class MasterStyle : Stylesheet() {
     }
 
     init {
-        tackyButton {
+        customDeckButton {
             cellSize = 30.px
-            borderColor += box(topColor,rightColor,bottomColor,leftColor)
+            borderColor += box(topColor, rightColor, bottomColor, leftColor)
             fontFamily = "Comic Sans MS"
             fontSize = 20.px
+            startMargin = 20.px
+            endMargin = 20.px
         }
     }
 }

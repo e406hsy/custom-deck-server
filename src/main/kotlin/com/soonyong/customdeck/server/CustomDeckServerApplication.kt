@@ -2,13 +2,11 @@ package com.soonyong.customdeck.server
 
 import com.soonyong.customdeck.server.ui.MasterStyle
 import com.soonyong.customdeck.server.ui.MasterView
+import javafx.stage.Stage
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 import org.springframework.context.ConfigurableApplicationContext
-import tornadofx.App
-import tornadofx.DIContainer
-import tornadofx.FX
-import tornadofx.launch
+import tornadofx.*
 import kotlin.reflect.KClass
 
 @SpringBootApplication
@@ -29,6 +27,13 @@ class CustomDeckServerApplication : App(MasterView::class, MasterStyle::class) {
             override fun <T : Any> getInstance(type: KClass<T>): T = context.getBean(type.java)
             override fun <T : Any> getInstance(type: KClass<T>, name: String): T = context.getBean(name, type.java)
         }
+    }
+
+    override fun start(stage: Stage) {
+        stage.minWidth = 600.0
+        stage.minHeight = 450.0
+        stage.isMaximized = false
+        super.start(stage)
     }
 
     override fun stop() { // On stop, we have to stop spring as well
