@@ -1,16 +1,17 @@
 package com.soonyong.customdeck.server.ui
 
+import com.soonyong.customdeck.server.domain.button.PageRepository
 import com.soonyong.customdeck.server.domain.button.model.CustomDeckPage
 import javafx.beans.property.SimpleStringProperty
 import javafx.geometry.Insets
 import javafx.scene.layout.Priority
-import org.springframework.context.ApplicationContext
 import tornadofx.*
+import java.lang.Thread.sleep
 
 class MasterView : View() {
-
     private val controller: MyController by di()
     private val input = SimpleStringProperty()
+
     override val root = borderpane {
         top = hbox {
             text("CustomDeck") {
@@ -20,14 +21,26 @@ class MasterView : View() {
                 }
             }
             text("Settings")
+            style {
+                backgroundColor += c("ff0000", 1.0)
+            }
         }
         center = vbox(10) {
             hbox {
                 combobox(values = listOf(CustomDeckPage(1, 2, 4)).asObservable()) {
                     cellFormat { text = "page ${it.id}" }
+                    selectionModel.selectFirst()
+                    hboxConstraints {
+                        margin = Insets(10.0, 20.0, 10.0, 20.0)
+                        hGrow = Priority.ALWAYS
+                    }
                 }
             }
             gridpane {
+                padding = Insets(20.0, 10.0, 10.0, 0.0)
+                vgap = 10.8
+                hgap = 8.0
+
 
                 row {
                     button("button 1")
@@ -41,6 +54,7 @@ class MasterView : View() {
                     button("button 6")
                     button("button 7")
                     button("button 8")
+                    children.addClass(MasterStyle.customDeckButton)
                 }
             }
         }
@@ -55,11 +69,8 @@ class MasterView : View() {
     }
 
     override fun onDock() {
-        currentWindow?.setOnCloseRequest {
-            if (!primaryStage.isIconified) {
-                it.consume()
-                primaryStage.isIconified = true
-            }
+        runAsync {
+            sleep(1000)
         }
     }
 
@@ -67,9 +78,13 @@ class MasterView : View() {
 }
 
 @org.springframework.stereotype.Controller
-class MyController(val applicationContext: ApplicationContext) : Controller() {
+class MyController(val pageRepository: PageRepository) : Controller() {
+
+    fun getPages() {
+        pageRepository.getCustomDeckPages()
+    }
+
     fun writeToDb(inputValue: String) {
-        println(applicationContext)
         println(this)
         println("Writing $inputValue to database!")
     }
