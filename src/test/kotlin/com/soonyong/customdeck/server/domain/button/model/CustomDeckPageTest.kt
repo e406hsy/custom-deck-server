@@ -1,11 +1,13 @@
 package com.soonyong.customdeck.server.domain.button.model
 
+import io.kotest.core.annotation.Ignored
 import io.kotest.core.datatest.forAll
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import org.junit.jupiter.api.assertThrows
 
+@Ignored
 class CustomDeckPageTest : FunSpec({
 
     val customDeckPage = CustomDeckPage(1, 2, 4)

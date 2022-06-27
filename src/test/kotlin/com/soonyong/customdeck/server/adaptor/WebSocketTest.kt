@@ -1,5 +1,6 @@
 package com.soonyong.customdeck.server.adaptor
 
+import io.kotest.core.annotation.Ignored
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.extensions.spring.SpringExtension
 import io.kotest.matchers.ints.shouldBeExactly
@@ -20,6 +21,7 @@ import java.net.URI
 
 private val log = KotlinLogging.logger {}
 
+@Ignored
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")
 class WebSocketTest : StringSpec() {

@@ -1,5 +1,6 @@
 package com.soonyong.customdeck.server.adaptor.presentation
 
+import io.kotest.core.annotation.Ignored
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.extensions.spring.SpringExtension
 import mu.KotlinLogging
@@ -10,6 +11,7 @@ import org.springframework.test.web.reactive.server.WebTestClient
 
 private val log = KotlinLogging.logger {}
 
+@Ignored
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")
 class CustomDeckPageControllerTest(webTestClient: WebTestClient) : FunSpec() {

@@ -5,6 +5,7 @@ import com.soonyong.customdeck.server.application.keyboard.KeyboardEventListener
 import com.soonyong.customdeck.server.domain.button.ButtonRepository
 import com.soonyong.customdeck.server.domain.button.model.Button
 import com.soonyong.customdeck.server.domain.button.model.ButtonType
+import io.kotest.core.annotation.Ignored
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.extensions.spring.SpringExtension
 import io.mockk.every
@@ -17,6 +18,7 @@ import org.springframework.test.context.ActiveProfiles
 
 private val log = KotlinLogging.logger {}
 
+@Ignored
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")
 class ButtonServiceImplTest(buttonServiceImpl: ButtonServiceImpl) : StringSpec() {

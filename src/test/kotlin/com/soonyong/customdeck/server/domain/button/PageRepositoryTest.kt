@@ -3,6 +3,7 @@ package com.soonyong.customdeck.server.domain.button
 import com.soonyong.customdeck.server.domain.button.model.Button
 import com.soonyong.customdeck.server.domain.button.model.CustomDeckPage
 import io.kotest.assertions.throwables.shouldThrow
+import io.kotest.core.annotation.Ignored
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.collections.shouldContainInOrder
 import io.kotest.matchers.shouldBe
@@ -13,6 +14,7 @@ import java.io.File
 private const val pageFileName = "page_test_file.txt"
 private const val buttonFileName = "button_test_file.txt"
 
+@Ignored
 class PageRepositoryTest : FunSpec({
 
     val buttonRepository = ButtonRepository(buttonFileName)
