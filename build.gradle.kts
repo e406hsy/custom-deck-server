@@ -1,17 +1,10 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("application")
-    id("org.openjfx.javafxplugin") version "0.0.8"
     id("org.springframework.boot") version "2.6.1"
     id("io.spring.dependency-management") version "1.0.11.RELEASE"
     kotlin("jvm") version "1.6.0"
     kotlin("plugin.spring") version "1.6.0"
-}
-
-javafx {
-    version = "11.0.2"
-    modules("javafx.controls", "javafx.graphics")
 }
 
 group = "com.soonyong"
@@ -26,22 +19,12 @@ configurations {
 
 repositories {
     mavenCentral()
-
-    maven {
-        setUrl("https://plugins.gradle.org/m2/")
-    }
 }
-
 
 dependencies {
     /** kotlin **/
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
-
-    /** tornadoFx */
-    implementation("no.tornado:tornadofx:1.7.20")
 
     /** jackson kotlin **/
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.13.0")
